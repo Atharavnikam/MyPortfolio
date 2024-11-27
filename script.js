@@ -131,33 +131,42 @@ if (contactForm) {
 
 
 function sendMail() {
+    const params = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        message: document.getElementById('message').value
+    };
 
-	
+    const serviceID = "service_7meugbe"; 
+    const templateID = "template_7xf9ull"; 
 
-	var params = {
-	name: document.getElementById('name').value,
-	email: document.getElementById('email').value,
-	message: document.getElementById('message').value
-	}
+    // Add a loading spinner or feedback if needed
+    document.querySelector('.contact-button').innerHTML = "Sending...";
 
-	const serviceID = "service_7meugbe";
-	const templateID = "template_7xf9ull";
+    // Send the email
+    emailjs
+        .send(serviceID, templateID, params)
+        .then((response) => {
+            console.log("SUCCESS!", response.status, response.text);
 
-	emailjs.send(serviceID, templateID, params)
-	.then(
-	res => {
-				document.getElementById('name').value = "";
-				document.getElementById('email').value = "";
-				document.getElementById('message').value = "";
+            // Clear the form fields
+            document.getElementById('name').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('message').value = "";
 
-				contactSubmitAfter.classList.add('show');
-				formSection.classList.add('hide');
-				contactSection.classList.add('csa-cs');
-				contactForm.classList.add('csa-cf');
+            // Show success message
+            alert("Message sent successfully!");
 
-			}
-		)
-		.catch((error) => {
-			console.log(error);
-		})
+            // Reset button text
+            document.querySelector('.contact-button').innerHTML = "Submit";
+        })
+        .catch((error) => {
+            console.error("FAILED...", error);
+
+            // Show error message
+            alert("Failed to send the message. Please try again later.");
+
+            // Reset button text
+            document.querySelector('.contact-button').innerHTML = "Submit";
+        });
 }
