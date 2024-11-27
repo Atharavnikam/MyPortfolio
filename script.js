@@ -1,41 +1,49 @@
 // Navigation Menu Toggle Logic
-let menu = document.querySelector('#menu-icon-js');
-let menuicon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
-let navtc = document.querySelector('#nav-tc-js');
+const menu = document.querySelector('#menu-icon-js');
+const menuIcon = document.querySelector('#menu-icon');
+const navbar = document.querySelector('.navbar');
+const navTc = document.querySelector('#nav-tc-js');
+const header = document.getElementById('header');
 
-menu.onclick = () => {
-    menuicon.classList.toggle('bx-x');
-    navbar.classList.toggle('open');
-    navtc.classList.toggle('nav-touch-close-open');
-};
+// Menu toggle functionality
+if (menu && menuIcon && navbar && navTc) {
+    menu.onclick = () => {
+        menuIcon.classList.toggle('bx-x');
+        navbar.classList.toggle('open');
+        navTc.classList.toggle('nav-touch-close-open');
+    };
 
-navtc.onclick = () => {
-    menuicon.classList.remove('bx-x');
-    navbar.classList.remove('open');
-    navtc.classList.remove('nav-touch-close-open');
-};
+    navTc.onclick = () => {
+        menuIcon.classList.remove('bx-x');
+        navbar.classList.remove('open');
+        navTc.classList.remove('nav-touch-close-open');
+    };
+}
 
 // Navbar Hide on Scroll Logic
-let prevScrollpos = window.pageYOffset;
+let prevScrollPos = window.pageYOffset;
 
 window.onscroll = () => {
-    let currentScrollPos = window.pageYOffset;
-    const header = document.getElementById('header');
+    if (!header) return;
+
+    const currentScrollPos = window.pageYOffset;
     header.classList.add('scrolled');
 
     if (currentScrollPos === 0) {
         header.classList.remove('scrolled');
     }
-    if (navtc.classList.contains('nav-touch-close-open')) {
+
+    if (navTc && navTc.classList.contains('nav-touch-close-open')) {
         return;
     }
-    if (prevScrollpos > currentScrollPos) {
+
+    if (prevScrollPos > currentScrollPos) {
         header.style.top = "0";
     } else {
         header.style.top = "-100px";
     }
-    prevScrollpos = currentScrollPos;
+
+    prevScrollPos = currentScrollPos;
 };
 
 // Contact Form Validation and Submission
@@ -51,37 +59,44 @@ const submitText = document.querySelector('.submit-text');
 const contactSubmitAfter = document.querySelector('.contact-submit-after');
 const csaOK = document.querySelector('.csa-ok');
 
-if (csaOK) {
+// Reset form and feedback after submission
+if (csaOK && contactSubmitAfter && contactForm && contactButton && contactLoad && submitText) {
     csaOK.onclick = () => {
         contactSubmitAfter.classList.remove('show');
-        contactForm.reset(); // Clear the form
+        contactForm.reset();
         contactButton.classList.remove('loading');
         contactLoad.classList.remove('show');
         submitText.classList.remove('hide');
     };
 }
 
-// Validate Form
+// Validate Form Inputs
 function validateForm(event) {
-    event.preventDefault(); // Prevent the form from submitting
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    if (!nameInput || !emailInput || !messageInput || !errorDiv || !contactButton || !contactLoad || !submitText) {
+        console.error('One or more form elements are missing.');
+        return;
+    }
 
     let isValid = true;
 
-    // Validate name
+    // Validate Name
     if (!nameInput.value.trim()) {
         isValid = false;
     }
 
-    // Validate email
+    // Validate Email
     if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
         isValid = false;
     }
 
-    // Validate message
+    // Validate Message
     if (!messageInput.value.trim()) {
         isValid = false;
     }
 
+    // Error feedback
     if (!isValid) {
         errorDiv.classList.add('error-show');
     } else {
@@ -91,7 +106,7 @@ function validateForm(event) {
         contactLoad.classList.add('show');
         submitText.classList.add('hide');
 
-        // Simulate a delay to show loading feedback
+        // Simulate loading and send mail
         setTimeout(() => {
             sendMail();
         }, 2000);
@@ -104,7 +119,7 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-// Submit Form and Send Email using EmailJS
+// Send Email using EmailJS
 function sendMail() {
     const params = {
         name: nameInput.value,
@@ -119,10 +134,10 @@ function sendMail() {
         .then((response) => {
             console.log("SUCCESS!", response.status, response.text);
 
-            // Clear the form
+            // Reset form
             contactForm.reset();
 
-            // Show success feedback
+            // Success feedback
             contactSubmitAfter.classList.add('show');
             contactButton.classList.remove('loading');
             contactLoad.classList.remove('show');
@@ -131,7 +146,7 @@ function sendMail() {
         .catch((error) => {
             console.error("FAILED...", error);
 
-            // Show error feedback
+            // Failure feedback
             alert("Failed to send the message. Please try again later.");
             contactButton.classList.remove('loading');
             contactLoad.classList.remove('show');
