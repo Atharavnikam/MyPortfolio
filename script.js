@@ -133,38 +133,32 @@ if (contactForm) {
 
 function sendMail() {
 
-	// Remove this section after adding the Email Js APi key in the script tag of the contact.html, uncomment this function section
-	// From this
-	contactSubmitAfter.classList.add('show');
-	formSection.classList.add('hide');
-	contactSection.classList.add('csa-cs');
-	contactForm.classList.add('csa-cf');
-	// To this
+	
 
-	// var params = {
-	// 	name: document.getElementById('name').value,
-	// 	email: document.getElementById('email').value,
-	// 	message: document.getElementById('message').value
-	// }
+	var params = {
+	name: document.getElementById('name').value,
+	email: document.getElementById('email').value,
+	message: document.getElementById('message').value
+	}
 
-	// const serviceID = "service_evf2wim";
-	// const templateID = "template_v085uvl";
+	const serviceID = "service_7meugbe";
+	const templateID = "template_7xf9ull";
 
-	// emailjs.send(serviceID, templateID, params)
-	// 	.then(
-	// 		res => {
-	// 			document.getElementById('name').value = "";
-	// 			document.getElementById('email').value = "";
-	// 			document.getElementById('message').value = "";
+	emailjs.send(serviceID, templateID, params)
+	.then(
+	res => {
+				document.getElementById('name').value = "";
+				document.getElementById('email').value = "";
+				document.getElementById('message').value = "";
 
-	// 			contactSubmitAfter.classList.add('show');
-	// 			formSection.classList.add('hide');
-	// 			contactSection.classList.add('csa-cs');
-	// 			contactForm.classList.add('csa-cf');
+				contactSubmitAfter.classList.add('show');
+				formSection.classList.add('hide');
+				contactSection.classList.add('csa-cs');
+				contactForm.classList.add('csa-cf');
 
-	// 		}
-	// 	)
-	// 	.catch((error) => {
-	// 		console.log(error);
-	// 	})
+			}
+		)
+		.catch((error) => {
+			console.log(error);
+		})
 }
