@@ -130,7 +130,7 @@ if (contactForm) {
 
 
 // After adding the Email Js APi key in the script tag of the contact.html, uncomment this function section
-
+emailjs.init('4_LcAD93zfSukXXLG');
 function sendMail() {
 
 	
