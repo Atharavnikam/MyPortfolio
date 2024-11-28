@@ -126,22 +126,6 @@ function isValidEmail(email) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const form = document.getElementById('form');
 const result = document.getElementById('result');
 
@@ -153,6 +137,11 @@ form.addEventListener('submit', function (e) {
     const object = Object.fromEntries(formData.entries()); // Convert form data to an object
     const json = JSON.stringify(object); // Convert object to JSON
 
+    // Add access key to the request body
+    const accessKey = form.querySelector('input[name=""1fb498e9-361b-4236-9d4d-4c22a4a264a0""]').value; // Get access key from the form
+    object.access_key = 1fb498e9-361b-4236-9d4d-4c22a4a264a0; // Add the access key to the object
+    const updatedJson = JSON.stringify(object); // Update the JSON payload with the access key
+
     result.innerHTML = "Please wait..."; // Show loading message
 
     // Fetch API request
@@ -162,14 +151,14 @@ form.addEventListener('submit', function (e) {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
-        body: json, // Send the form data as JSON
+        body: updatedJson, // Send the updated form data as JSON
     })
         .then(async (response) => {
-            let json = await response.json();
-            if (response.status == 200) {
+            let jsonResponse = await response.json();
+            if (response.status === 200) {
                 result.innerHTML = "Form submitted successfully.";
             } else {
-                result.innerHTML = json.message || "Something went wrong!";
+                result.innerHTML = jsonResponse.message || "Something went wrong!";
             }
         })
         .catch((error) => {
@@ -177,6 +166,22 @@ form.addEventListener('submit', function (e) {
             result.innerHTML = "Failed to submit the form.";
         });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
