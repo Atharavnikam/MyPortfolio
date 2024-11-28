@@ -77,19 +77,21 @@
                 </div>
 
                 <form method="POST" id="form">
+    <!-- Access key -->
+    <input type="hidden" name="access_key" value="1fb498e9-361b-4236-9d4d-4c22a4a264a0">
+    
+    <!-- Form fields -->
+    <input type="text" name="name" placeholder="Enter Name Here" required>
+    <input type="email" name="email" placeholder="Enter Email Here" required>
+    <textarea name="message" placeholder="Enter Message Here" required></textarea>
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    
+    <!-- Submit button -->
+    <button type="submit">Submit Form</button>
 
-                    <input type="hidden" name="access_key" value="1fb498e9-361b-4236-9d4d-4c22a4a264a0">
-                
-                    <input type="text" name="name"  placeholder="Enter Name Here" required>
-                    <input type="email" name="email" placeholder="Enter Email Here" required>
-                    <textarea name="message" placeholder="Enter Message Here"required></textarea>
-                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-                
-                    <button type="submit">Submit Form</button>
-                
-                    <div id="result"></div>
-                
-                </form>
+    <!-- Result message -->
+    <div id="result"></div>
+</form>
 
 
                 
