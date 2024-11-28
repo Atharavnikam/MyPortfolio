@@ -1883,3 +1883,22 @@ h1 {
     font-weight: bold;
     display: none;
 }
+
+
+
+
+
+  @media screen and (max-width: 600px) {
+            form {
+                width: 90%;
+                padding: 15px;
+            }
+
+            input, textarea {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 18px;
+            }
+        }
