@@ -132,69 +132,43 @@ const result = document.getElementById('result');
 form.addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent default form submission
 
+    // Extract the access key from the hidden input field
+    const accessKey = form.querySelector('input[name="access_key"]').value;
+
     // Collect form data
     const formData = new FormData(form);
     const object = Object.fromEntries(formData.entries()); // Convert form data to an object
-    const json = JSON.stringify(object); // Convert object to JSON
 
-    // Add access key to the request body
-    const accessKey = form.querySelector('input[name=""1fb498e9-361b-4236-9d4d-4c22a4a264a0""]').value; // Get access key from the form
-    object.access_key = 1fb498e9-361b-4236-9d4d-4c22a4a264a0; // Add the access key to the object
-    const updatedJson = JSON.stringify(object); // Update the JSON payload with the access key
+    // Add the access key to the object
+    object.access_key = accessKey;
+
+    // Convert the object with access key to JSON
+    const updatedJson = JSON.stringify(object);
 
     result.innerHTML = "Please wait..."; // Show loading message
 
-    // Fetch API request
+    // Fetch API request to Web3Forms
     fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
-        body: updatedJson, // Send the updated form data as JSON
+        body: updatedJson, // Send the updated JSON with access key
     })
-        .then(async (response) => {
-            let jsonResponse = await response.json();
-            if (response.status === 200) {
-                result.innerHTML = "Form submitted successfully.";
-            } else {
-                result.innerHTML = jsonResponse.message || "Something went wrong!";
-            }
-        })
-        .catch((error) => {
-            console.error(error); // Log errors for debugging
-            result.innerHTML = "Failed to submit the form.";
-        });
+    .then(async (response) => {
+        let json = await response.json();
+        if (response.status == 200) {
+            result.innerHTML = "Form submitted successfully.";
+        } else {
+            result.innerHTML = json.message || "Something went wrong!";
+        }
+    })
+    .catch((error) => {
+        console.error(error); // Log errors for debugging
+        result.innerHTML = "Failed to submit the form.";
+    });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
