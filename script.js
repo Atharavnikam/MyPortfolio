@@ -15,7 +15,7 @@ navtc.onclick = () => {
     navbar.classList.remove('open');
     navtc.classList.remove('nav-touch-close-open');
 };
-
+ document.getElementById('current-year').textContent = new Date().getFullYear();
 // Hide navbar on scroll down and show on scroll up
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function () {
